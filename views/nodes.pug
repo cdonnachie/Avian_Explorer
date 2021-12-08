@@ -1,0 +1,134 @@
+extends layout
+
+block content
+ .col-md-12
+   .row.text-center.d-flex.justify-content-center
+     .col-md-3
+       .card.card-default.d-md-block.d-block
+         .card-header.bg-primary.text-white
+           label Avian Full Nodes
+         .card-body
+            p
+             b Americas Node:
+             |  dnsseed.us.avn.network:7895
+            p
+             b European Node: 
+             | dnsseed.eu.avn.network:7895
+       br
+       br
+       .card.card-default.d-md-block.d-block
+         .card-header.bg-primary.text-white
+           label Countries
+         .card-body
+            #country-list
+       br
+       br
+       .card.card-default.d-md-block.d-block
+         .card-header.bg-primary.text-white
+           label Chart
+         .card-body
+            #chart
+            #chartinfo
+              h5 Did you know?
+              p.text-info
+                | With just a few clicks, you can run your Desktop Wallet as your own node on the Avian Network
+            div(style='clear:both;')
+      
+     .col-md-9
+       .card.card-default.d-none.d-md-block.d-block
+         .card-header.bg-primary.text-white
+           label Map Details
+         .card-body
+          // Show nodes on map
+          #map
+          // footer
+          script.
+           const locations = !{locations}
+           var countNodes = 0;
+           //const tiles = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+           const tiles = L.tileLayer('https://maps.geoapify.com/v1/tile/osm-bright-smooth/{z}/{x}/{y}.png?apiKey=0fabc468d68f475c9b9efe43660b0b61', {
+           maxZoom: 18,
+           noWrap: true,
+           attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Points &copy 2021 Avian Network'
+           });
+           const map = L.map('map', {layers: [tiles]});
+           const locationsToCount = {};
+           const markers = L.markerClusterGroup();
+           const markerIcon = L.icon({
+           iconUrl: '/images/avian_256x256x32.png',
+           iconSize: [32, 32], // size of the icon
+           iconAnchor: [15.5, 42], // point of the icon which will correspond to marker's location
+           popupAnchor: [0, -45] // point from which the popup should open relative to the iconAnchor
+           });
+           for ( var i = 0; i < locations.length; ++i )
+           {
+           if (locationsToCount[locations[i].country]) {
+           locationsToCount[locations[i].country]++;
+           } else {
+           locationsToCount[locations[i].country] = 1;
+           }
+           var popup = '<b>IP: </b>' + locations[i].address +
+           '<br/><b>City: </b>' + locations[i].city +
+           '<br/><b>Region: </b> ' + locations[i].regionname;
+           try {
+           var m = L.marker( [locations[i].latitude.$numberDecimal, locations[i].longitude.$numberDecimal],{ icon: markerIcon }).bindPopup( popup );
+           markers.addLayer(m);
+           countNodes++;
+           }
+           catch(err) {
+           }
+           }
+           map.addLayer(markers);
+           map.fitWorld().zoomIn();
+           const locationsArray = Object.keys(locationsToCount).map(k => [k, locationsToCount[k]]);
+           function precisionRound(number, precision) {
+           var factor = Math.pow(10, precision);
+           return Math.round(number * factor) / factor;
+           }
+           const renderCountries = () => {
+           var output = "";
+           var locationsArrayNames = "";
+           var showCurrentCountries = 0;
+           var colors = ["#3366cc", "#dc3912", "#ff9900","#109618","#990099","#0099c6","#dd4477","#66aa00","#b82e2e","#316395","#994499","#22aa99","#aaaa11","#6633cc","#e67300"];
+           // sort location asc 100 > 90 > 80
+           locationsArray.sort((a, b) => b[1] - a[1]);
+           nameArray = locationsArray.reduce((a, v) => a += v[0],'');
+           countArray = locationsArray.reduce((a, v) => a += v[1],'');
+           if(countArray.length < colors.length) {
+           showCurrentCountries = countArray.length;
+           } else {
+           showCurrentCountries = colors.length;
+           }
+           function showCountriesList() {
+           for(i = 0; i < showCurrentCountries; i++) {
+           locationsArrayNames = locationsArray[i][0];
+           output += "<div title='"+locationsArrayNames+"\\n"+locationsArray[i][1]+" ("+ precisionRound((locationsArray[i][1]*100/countNodes),1)+"%)' class='colleft20' style='background:"+colors[i]+"'><strong class='num'> "+ locationsArray[i][1]+ "</strong><br />" +locationsArrayNames+" </div>";
+           if(i == 4 || i == 9 || i == 14 || i == 24) {
+           output += "<div style='clear:both'></div>";
+           }
+           }
+           return(output);
+           }
+           // show something
+           document.querySelector('#country-list').innerHTML = showCountriesList();
+           }
+           google.charts.load('current', {'packages': ['corechart']});
+           google.charts.setOnLoadCallback(drawChart);
+           function drawChart() {
+           const data = google.visualization.arrayToDataTable([['Task', 'Hours per Day']].concat(locationsArray));
+           const options = {
+           backgroundColor: 'transparent',
+           chartArea: {height: '300px'},
+           legend: {position: 'none'},
+           pieHole: 0.1,
+           };
+           const chart = new google.visualization.PieChart(document.getElementById('chart'));
+           chart.draw(data, options);
+           }
+           const numberWithCommas = (x) => {
+           return x.toString().replace(/\\B(?=(\d{3})+(?!\d))/g, ",");
+           }
+           renderCountries();
+           $(window).resize(function(){
+           drawChart();
+           });

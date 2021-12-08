@@ -1,0 +1,109 @@
+extends menu
+ 
+block market_view
+  script.
+  .row
+    .col-md-12
+      .card.card-default.border.border-primary.border-3
+        .card-header.bg-primary.text-white.border.border-white.border-1
+          h5.fa.fa-chart-line.card-title #{settings.locale.exbitron} - #{marketdata.coin}/#{marketdata.exchange} - #{settings.locale.mkt_hours}
+        table.table.table-bordered.summary-table 
+          thead
+            tr
+              th #{settings.locale.mkt_high}
+              th #{settings.locale.mkt_low}
+              th #{settings.locale.mkt_volume} (#{marketdata.coin})
+              th #{settings.locale.mkt_last}
+              th #{settings.locale.mkt_change}
+          tbody
+            tr
+              td #{parseFloat(marketdata.data.summary.high).toFixed(8)}
+              td #{parseFloat(marketdata.data.summary.low).toFixed(8)}
+              td #{parseFloat(marketdata.data.summary.volume).toFixed(8)} 
+              td #{parseFloat(marketdata.data.summary.last).toFixed(8)}
+              - var exbitron_change = parseFloat(marketdata.data.summary.change).toFixed(2);
+              if exbitron_change >= 0
+                td.table-success +#{exbitron_change} %
+              else
+                td.table-danger #{exbitron_change} %
+  br
+  .row
+    .col-md-6.col-xs-12
+      .card.card-default.border.border-primary.border-3
+        .card-header.bg-primary.text-white.border.border-white.border-1
+          h5.card-title #{settings.locale.mkt_buy_orders}
+        table.table.table-striped.table-bordered.order-table
+          thead
+            tr
+              th #{settings.locale.mkt_price} (#{marketdata.exchange})
+              th #{settings.locale.mkt_amount} (#{marketdata.coin})
+              th.d-none.d-sm-block #{settings.locale.mkt_total} (#{marketdata.exchange})
+          tbody
+            each buy in marketdata.data.buys
+              tr
+                td.text-success
+                  =buy.price
+                td
+                  =buy.amount
+                td.d-none.d-sm-block
+                  =buy.total
+    .col-md-6.col-xs-12
+      .card.card-default.border.border-primary.border-3
+        .card-header.bg-primary.text-white.border.border-white.border-1
+          h5.card-title #{settings.locale.mkt_sell_orders}
+        table.table.table-striped.table-bordered.order-table
+          thead
+            tr
+              th #{settings.locale.mkt_price} (#{marketdata.exchange})
+              th #{settings.locale.mkt_amount} (#{marketdata.coin})
+              th.d-none.d-sm-block #{settings.locale.mkt_total} (#{marketdata.exchange})
+          tbody
+            each sell in marketdata.data.sells
+              tr
+                td.text-danger
+                  =parseFloat(sell.price).toFixed(8)
+                td
+                  =parseFloat(sell.amount).toFixed(8)
+                td.d-none.d-sm-block
+                  =parseFloat(sell.total).toFixed(8)
+  br
+  .row   
+    .col-md-12
+      .card.card-default.border.border-primary.border-3
+        .card-header.bg-primary.text-white.border.border-white.border-1
+          h5.card-title #{settings.locale.mkt_trade_history}
+        table.table.table-hover.history-table.table-bordered(cellspacing="0")
+          thead
+            tr
+              th.d-none.d-sm-block #{settings.locale.mkt_type}
+              th #{settings.locale.mkt_amount} (#{marketdata.coin})
+              th #{settings.locale.mkt_price} (#{marketdata.exchange})
+              th #{settings.locale.mkt_total} (#{marketdata.exchange})
+              th.d-none.d-sm-block #{settings.locale.mkt_time_stamp}
+          tbody
+            each order in marketdata.data.history
+              if order.taker_type == 'buy'
+                tr
+                  td.d-none.d-sm-block.text-success
+                    =order.taker_type
+                  td
+                    =parseFloat(order.amount).toFixed(8)
+                  td
+                    =parseFloat(order.price).toFixed(8)
+                  td
+                    =parseFloat(order.total).toFixed(8)
+                  td.d-none.d-sm-block
+                    =(new Date(order.created_at * 1000).toUTCString())
+              else
+                tr 
+                  td.d-none.d-sm-block.text-danger
+                    =order.taker_type
+                  td
+                    =parseFloat(order.amount).toFixed(8)
+                  td
+                    =parseFloat(order.price).toFixed(8)
+                  td
+                    =parseFloat(order.total).toFixed(8)
+                  td.d-none.d-sm-block
+                    =(new Date(order.created_at * 1000).toUTCString())
+      .footer-padding

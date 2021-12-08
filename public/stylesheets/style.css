@@ -1,0 +1,398 @@
+@font-face {
+	font-family: 'avn_font';
+	src:  url('/fonts/avn.eot?8033qw');
+	src:  url('/fonts/avn.eot?8033qw#iefix') format('embedded-opentype'),
+	  url('/fonts/avn.ttf?8033qw') format('truetype'),
+	  url('/fonts/avn.woff?8033qw') format('woff'),
+	  url('/fonts/avn.svg?8033qw#avn_font') format('svg');
+	font-weight: normal;
+	font-style: normal;
+	font-display: block;
+}
+
+[class^="icon-"], [class*=" icon-"] {
+	/* use !important to prevent issues with browser extensions that change fonts */
+	font-family: 'avn_font' !important;
+	speak: never;
+	font-style: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	line-height: 1;
+  
+	/* Better Font Rendering =========== */
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+  
+.icon-avn_font:before {
+	content: "\e900";
+}
+
+body {
+  min-height: 300px;
+  padding: 130px 40px; 
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  margin-bottom: 40px;
+  background-color: black;
+  background-image: url(/images/avnbackground.png);
+  background-size: contain;
+  clear: both;
+}
+
+.navbar {
+	padding: 0.2rem 0.4rem;
+}
+
+.footer {
+	height: 40px;
+}
+.footer p {
+    margin-top: 0.1rem;
+    margin-bottom: 0.1rem;
+}
+
+.footer .nav-link {
+    padding: 0.1rem 0.1rem;
+}
+
+.footer label {
+    margin-bottom: 0.1rem;
+}
+
+.footer .poweredby {
+    margin-right: 0.2rem;
+    font-size: 80%;
+}
+
+.footer .social-link {
+    margin-right: 0.2rem;
+    font-size: 100%;
+}
+
+.footer .social-link img{
+	width: 40px;
+	margin: 5px 5px;
+}
+
+.footer-logo {
+	height: 40px;
+	position: absolute;
+	bottom: 0px;
+}
+
+#index-search {
+	width: 80%;
+}
+
+.nav-search input {
+	width: 400px !important;
+	margin-right: 5px;	
+}
+
+.view_tx {
+	text-align: center;
+}
+
+.block-last {
+	margin: 0;
+	margin-right: 10px;
+}
+
+.block-next {
+	margin: 0;
+	margin-left: 10px;
+}
+#chart3 .jqplot-xaxis {
+	display: none;
+}
+
+.data {
+	display: block;
+	overflow: hidden;
+	width: 100%;
+}
+
+.txid {
+	width: 100%;
+	display:block;
+	overflow: hidden;
+}
+
+.panel-address-summary {
+ margin-bottom: 5px;
+}
+
+p {
+    margin-top: 0.4rem;
+    margin-bottom: 0.4rem;
+}
+
+h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
+	margin-bottom: 0.2rem;
+	margin-top: 0.5rem;
+}
+
+/* datatable tweaks */
+table {
+	width: 100% !important;
+}
+.dataTables_info, .dataTables_length {
+	padding-left: 10px;
+}
+
+.dataTables_info {
+	display: hidden !important;
+}
+
+.dataTables_length {
+	padding-top: 10px;
+}
+
+.dataTables_paginate {
+	padding-right: 5px;
+}
+
+.tab-pane {
+	margin-top: 5px;
+}
+
+table a:not(.btn),.table a:not(.btn){
+	text-decoration:none
+}
+
+tr {
+	width: 100%;
+}
+
+.footer-padding {
+	height: 50px;
+	width: 100%;
+}
+
+.summary-table {
+	margin: 0px !important;
+}
+
+#loading-icon {
+	width: 30px;
+    margin: 10px 10px;
+}
+
+.menu-text {
+	margin-left:5px;
+}
+
+.connections {
+	position: absolute;
+	bottom: 15px;
+	right: 15px;
+}
+
+#lblBlockcount {
+	margin-right: 10px;
+}
+
+#market_menu {
+	margin-bottom: 5px;
+}
+
+.label a:link {
+	color: #ffffff;
+}
+
+.label a:visited {
+	color: #ffffff;
+}
+
+.label a:hover {
+	color: #ffffff;
+}
+
+.label a:active {
+	color: #ffffff;
+}
+
+@media(max-width:767px){
+	body {
+		padding: 0px;
+		padding-top:120px;
+	}
+}
+
+@media(max-width:1096px){
+	.nav-search input {
+	    width: 300px !important;
+    }
+}
+
+@media(max-width:865px){
+	.nav-search input {
+	    width: 150px !important;
+    }
+}
+.table>tbody>tr>td.addr-summary {
+	line-height: 7.7;
+	font-size: 1.3em;
+	font-weight: 800;
+	text-align: center;
+}
+
+.qrcode {
+	/*position: absolute;
+	top: 65px;
+	right: 15px;*/
+}
+
+
+.decimal {
+	font-size: 0.7em;
+}
+
+#map{
+  display: none;
+}
+
+
+#chartinfo a{
+  -webkit-transition: all 0.5s; /* Safari */
+  transition: all 0.5s;
+}
+
+
+.colleft20 {
+  float:left;
+  text-align: center;
+  vertical-align: middle;
+  color: white;
+  font-size: 10px;
+  width:18%;
+  height: 41px;
+  padding: 4px 0;
+  overflow: hidden;
+  margin:1% 1% 1% 1%;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+}
+
+.sep{
+  display: block;
+   height: 1px;
+  border: 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  background: transparent;
+  margin: 15px 0;
+  padding: 0;
+}
+
+.cat{
+  color: #f1c40f;
+  font-size: 16px;
+  font-weight: bold;
+  text-shadow: 0 1px 0 rgba(0, 0, 0, 1);
+}
+
+#chart {
+  width: 100%;
+  font-size: 11px;
+  overflow: visible;
+}
+
+#chartinfo {
+  display: none;
+}
+
+@media (min-width: 400px) {
+  #map {
+    display: block;
+    width: 100%;
+    height:600px;
+    position: relative;
+  }
+
+  #chart {
+    float:left;
+    width: 50%;
+    font-size: 11px;
+    overflow: visible;
+    margin-right: 20px;
+  }
+
+  #chartinfo {
+    display: inline;
+    float:left;
+    width: calc(50% - 20px);
+    font-size: 12px;
+    line-height: 16px;
+  }
+
+}
+
+.leaflet-marker-icon,
+  .marker-cluster,
+  .marker-cluster-small,
+  .leaflet-zoom-animated,
+  .leaflet-interactive{
+    color: #222222;
+  }
+
+#chartdivMinX {
+	width: 100%;
+	height: 350px;
+	margin-bottom: 15px;
+}
+
+#chartdivX16RT {
+	width: 100%;
+	height: 350px;
+	margin-bottom: 10px;
+}
+
+#chartdivDifficultyMinX {
+	width: 100%;
+	height: 350px;
+	margin-bottom: 10px;
+}
+
+#chartdivDifficultyX16RT {
+	width: 100%;
+	height: 350px;
+	margin-bottom: 10px;
+}
+
+#chartdivNethashMinX {
+	width: 100%;
+	height: 350px;
+	margin-bottom: 10px;
+}
+
+#chartdivNethashX16RT {
+	width: 100%;
+	height: 350px;
+	margin-bottom: 10px;
+}
+
+#piechartdiv {
+	width: 90%;
+	height: 500px;
+	margin-bottom: 15px;
+}
+
+#chartdiv {
+	width: 90%;
+	height: 500px;
+	margin-bottom: 15px;
+}
+
+#mapdiv {
+	width: 100%;
+	height: 500px;
+	overflow: hidden;
+}
+
+
+.clear{
+  clear: both;
+}
+

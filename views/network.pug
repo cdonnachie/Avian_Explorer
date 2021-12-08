@@ -1,0 +1,115 @@
+extends layout
+
+block content
+  script.
+    function Copy(){
+      var $temp = $("<textarea>");
+      var brRegex = /<br\s*[\/]?>/gi;
+      $("body").append($temp);
+      $temp.val($('#addnodes').html().replace(brRegex, "\r\n")).select();
+      document.execCommand("copy");
+      $temp.remove();
+      alert("Addnodes copied to clipboard!!!");
+    };
+    $(document).ready(function(){
+      var ctable1 = $('#connections-table').dataTable( {  
+        autoWidth: true,      
+        searching: false,
+        ordering: false,
+        responsive: true,
+        lengthChange: true,
+        processing: true,
+        ajax: {
+          url: '/ext/connections',
+          dataSrc: function ( json ) {
+            return json.data;
+          }
+        },
+        rowCallback: function (row, data, index) {
+          var flagBlock = '';
+
+          if (data['country_code'].length > 1) {
+            flagBlock = '&nbsp;<div class="flag-icon flag-icon-'+data['country_code'].toLowerCase()+'"></div>';
+          }
+          $("td:eq(0)", row).html(data['address']);
+          $("td:eq(1)", row).html(data['protocol']);
+          $("td:eq(2)", row).html(data['version']);
+          $("td:eq(3)", row).html(data['country']+flagBlock);
+
+        },
+        columns: [
+          { data: 'address', width: '25%' },
+          { data: 'protocol', width: '25%' },
+          { data: 'version', width:'25%' },
+          { data: 'country', width: '25%'}
+        ]
+      });
+      var ipdata = [];
+      var countries = [];
+      $.ajax({
+        url: '/ext/connections',
+        type: 'get',
+        dataType: 'json',
+        success: function(json) {  
+          for (var i=0;i<json.data.length; i++ ) {
+            if(json.data[i]['protocol'] == '70027') {
+              var row = [];
+              row.push((json.data[i]['address']));
+              row.push((json.data[i]['port']));
+              row.push((json.data[i]['country']));
+              if(!countries.includes(json.data[i]['country_code'])) {
+                countries.push((json.data[i]['country_code']));
+                $('#countries').append($("<option></option>").attr("value",json.data[i]['country']).text(json.data[i]['country']));
+              }
+              ipdata.push(row);
+            }
+          }
+          $('#countries').trigger('change');
+        },
+        error: function(e) {
+            console.log(e.message);
+        }
+      });
+      $(function() {
+        $('select[id="countries"]').on('change', function() {
+          var country = $(this).find(":selected").val();
+          var nodes = "";
+          for (var i=0;i<ipdata.length; i++ ) {
+            if(ipdata[i][2] == country) {
+              if(ipdata[i][1] == '') {
+                nodes = nodes + 'addnode='+ipdata[i][0]+'\n';
+              } else {
+                nodes = nodes + 'addnode='+ipdata[i][0]+':'+ipdata[i][1]+'\n';
+              }
+            }
+          }
+          $('#addnodes').text(nodes);
+        });
+      });
+
+
+    });
+  .row
+    .col-md-8.col-xs-12
+      .card.card-default.border.border-primary.border-3
+        .card-header.bg-primary.text-white.border.border-white.border-1
+          label.text-center #{settings.locale.net_connections}
+        table#connections-table.table.table-bordered.table-striped
+          thead
+            tr
+              th.text-center #{settings.locale.net_address}
+              th.text-center #{settings.locale.net_protocol}
+              th.text-center #{settings.locale.net_subversion}
+              th.text-center #{settings.locale.net_country}
+          tbody.text-center
+      .footer-padding              
+    .col-md-4.col-xs-12
+      .card.card-default.border.border-primary.border-3(style="height: 478px")
+        .card-header.bg-primary.text-white.border.border-white.border-1
+          label.float-start.align-middle(style="padding-right:10px") #{settings.locale.net_addnodes}
+          select#countries
+          button.btn.btn-sm.btn-secondary.text-white.border.border-white.border-1.float-end(onclick='Copy()') Copy to Clipboard
+        pre(style="padding-left:10px;padding-top:10px;")#addnodes
+      .footer-padding              
+
+

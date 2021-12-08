@@ -1,0 +1,328 @@
+extends layout
+
+block content
+  script.
+    $(document).ready(function() {
+      var rootDiffMinX = am5.Root.new("chartdivDifficultyMinX");
+      rootDiffMinX.numberFormatter.set("numberFormat", "####.########");
+      rootDiffMinX.setThemes([
+        am5themes_Dark.new(rootDiffMinX)
+      ]);
+      var chartDiffMinX = rootDiffMinX.container.children.push(am5xy.XYChart.new(rootDiffMinX, {
+        panX: false,
+        panY: false,
+        wheelX: "none",
+        wheelY: "none"
+      }));
+      var cursorDiffMinX = chartDiffMinX.set("cursor", am5xy.XYCursor.new(rootDiffMinX, {
+        behavior: "zoomX"
+      }));
+      cursorDiffMinX.lineY.set("visible", false);
+      var xAxisDiffMinX = chartDiffMinX.xAxes.push(am5xy.CategoryAxis.new(rootDiffMinX, {
+        categoryField: "block",
+        renderer: am5xy.AxisRendererX.new(rootDiffMinX, {}),
+        tooltip: am5.Tooltip.new(rootDiffMinX, {})
+      }));
+      var yAxisDiffMinX = chartDiffMinX.yAxes.push(am5xy.ValueAxis.new(rootDiffMinX, {
+        renderer: am5xy.AxisRendererY.new(rootDiffMinX, {})
+      }));
+      var seriesDiffMinX = chartDiffMinX.series.push(am5xy.SmoothedXLineSeries.new(rootDiffMinX, {
+        name: "Series",
+        xAxis: xAxisDiffMinX,
+        yAxis: yAxisDiffMinX,
+        valueYField: "powdiff",
+        categoryXField: "block",
+        tooltip: am5.Tooltip.new(rootDiffMinX, {
+          labelText: "[text-align: center]Diff(POW):\n[bold]{valueY}[/][/]"
+        })
+      }));
+      seriesDiffMinX.fills.template.setAll({
+        visible: true,
+        fillOpacity: 0.2
+      });
+      chartDiffMinX.set("scrollbarX", am5.Scrollbar.new(rootDiffMinX, {
+        orientation: "horizontal"
+      }));
+      seriesDiffMinX.appear(1000);
+      chartDiffMinX.appear(1000, 100);
+      function loadDataDiffMinX() {
+        am5.net.load("/ext/chartdata/minotaurx").then(function(result) {
+        var data = am5.JSONParser.parse(result.response);
+        xAxisDiffMinX.data.setAll(data);
+        seriesDiffMinX.data.setAll(data);
+        })
+      }
+      loadDataDiffMinX();
+      setInterval(loadDataDiffMinX, 30000);
+
+      var rootDiff = am5.Root.new("chartdivDifficultyX16RT");
+      rootDiff.numberFormatter.set("numberFormat", "####.########");
+      rootDiff.setThemes([
+        am5themes_Dark.new(rootDiff)
+      ]);
+      var chartDiff = rootDiff.container.children.push(am5xy.XYChart.new(rootDiff, {
+        panX: false,
+        panY: false,
+        wheelX: "none",
+        wheelY: "none"
+      }));
+      var cursorDiff = chartDiff.set("cursor", am5xy.XYCursor.new(rootDiff, {
+        behavior: "zoomX"
+      }));
+      cursorDiff.lineY.set("visible", false);
+      var xAxisDiff = chartDiff.xAxes.push(am5xy.CategoryAxis.new(rootDiff, {
+        categoryField: "block",
+        renderer: am5xy.AxisRendererX.new(rootDiff, {}),
+        tooltip: am5.Tooltip.new(rootDiff, {})
+      }));
+      var yAxisDiff = chartDiff.yAxes.push(am5xy.ValueAxis.new(rootDiff, {
+        renderer: am5xy.AxisRendererY.new(rootDiff, {})
+      }));
+      var seriesDiff = chartDiff.series.push(am5xy.SmoothedXLineSeries.new(rootDiff, {
+        name: "Series",
+        xAxis: xAxisDiff,
+        yAxis: yAxisDiff,
+        valueYField: "powdiff",
+        categoryXField: "block",
+        tooltip: am5.Tooltip.new(rootDiff, {
+          labelText: "[text-align: center]Diff(POW):\n[bold]{valueY}[/][/]"
+        })
+      }));
+      seriesDiff.fills.template.setAll({
+        visible: true,
+        fillOpacity: 0.2
+      });
+      chartDiff.set("scrollbarX", am5.Scrollbar.new(rootDiff, {
+        orientation: "horizontal"
+      }));
+      seriesDiff.appear(1000);
+      chartDiff.appear(1000, 100);
+      function loadDataDiff() {
+        am5.net.load("/ext/chartdata/x16rt").then(function(result) {
+        var data = am5.JSONParser.parse(result.response);
+        xAxisDiff.data.setAll(data);
+        seriesDiff.data.setAll(data);
+        })
+      }
+      loadDataDiff();
+      setInterval(loadDataDiff, 30000);
+    });
+  script.
+    $(document).ready(function() {
+      var rootMinX = am5.Root.new("chartdivNethashMinX");
+      rootMinX.numberFormatter.set("numberFormat", "####.########");
+      rootMinX.setThemes([
+        am5themes_Dark.new(rootMinX)
+      ]);
+      var chartMinX = rootMinX.container.children.push(am5xy.XYChart.new(rootMinX, {
+        panX: false,
+        panY: false,
+        wheelX: "none",
+        wheelY: "none"
+      }));
+      var cursorMinX = chartMinX.set("cursor", am5xy.XYCursor.new(rootMinX, {
+        behavior: "zoomX"
+      }));
+      cursorMinX.lineY.set("visible", false);
+      function loadDataMinX() {
+        am5.net.load("/ext/chartdata/minotaurx").then(function(result) {
+        var data = am5.JSONParser.parse(result.response);
+        xAxisMinX.data.setAll(data);
+        seriesMinX.data.setAll(data);
+        })
+      }
+      var xAxisMinX = chartMinX.xAxes.push(am5xy.CategoryAxis.new(rootMinX, {
+        categoryField: "block",
+        renderer: am5xy.AxisRendererX.new(rootMinX, {}),
+        tooltip: am5.Tooltip.new(rootMinX, {})
+      }));
+      var yAxisMinX = chartMinX.yAxes.push(am5xy.ValueAxis.new(rootMinX, {
+        renderer: am5xy.AxisRendererY.new(rootMinX, {})
+      }));
+      var seriesMinX = chartMinX.series.push(am5xy.SmoothedXLineSeries.new(rootMinX, {
+        name: "Series",
+        xAxis: xAxisMinX,
+        yAxis: yAxisMinX,
+        valueYField: "netHash",
+        categoryXField: "block",
+        tooltip: am5.Tooltip.new(rootMinX, {
+          labelText: "[text-align: center]netHash(GH/s):\n[bold]{valueY}[/][/]"
+        })
+      }));
+      //seriesMinX.set("fill", am5.color((0x0071fd)));
+      seriesMinX.fills.template.setAll({
+        visible: true,
+        fillOpacity: 0.2
+      });
+      chartMinX.set("scrollbarX", am5.Scrollbar.new(rootMinX, {
+        orientation: "horizontal"
+      }));
+      seriesMinX.appear(1000);
+      chartMinX.appear(1000, 100);
+      loadDataMinX();
+      setInterval(loadDataMinX,30000);
+      
+      //Next
+      var root = am5.Root.new("chartdivNethashX16RT");
+      root.numberFormatter.set("numberFormat", "####.########");
+      root.setThemes([
+        am5themes_Dark.new(root)
+      ]);
+      var chart = root.container.children.push(am5xy.XYChart.new(root, {
+        panX: false,
+        panY: false,
+        wheelX: "none",
+        wheelY: "none"
+      }));
+      var cursor = chart.set("cursor", am5xy.XYCursor.new(root, {
+        behavior: "zoomX"
+      }));
+      cursor.lineY.set("visible", false);
+      function loadData() {
+        am5.net.load("/ext/chartdata/x16rt").then(function(result) {
+        var data = am5.JSONParser.parse(result.response);
+        xAxis.data.setAll(data);
+        series.data.setAll(data);
+        })
+      }
+      var xAxis = chart.xAxes.push(am5xy.CategoryAxis.new(root, {
+        categoryField: "block",
+        renderer: am5xy.AxisRendererX.new(root, {}),
+        tooltip: am5.Tooltip.new(root, {})
+      }));
+      var yAxis = chart.yAxes.push(am5xy.ValueAxis.new(root, {
+        renderer: am5xy.AxisRendererY.new(root, {})
+      }));
+
+      var series = chart.series.push(am5xy.SmoothedXLineSeries.new(root, {
+        name: "Series",
+        xAxis: xAxis,
+        yAxis: yAxis,
+        valueYField: "netHash",
+        categoryXField: "block",
+        tooltip: am5.Tooltip.new(root, {
+          labelText: "[text-align: center]netHash(GH/s):\n[bold]{valueY}[/][/]"
+        })
+      }));
+
+      //series.set("fill", am5.color((0x0071fd)));
+      series.fills.template.setAll({
+        visible: true,
+        fillOpacity: 0.2
+      });
+      chart.set("scrollbarX", am5.Scrollbar.new(root, {
+        orientation: "horizontal"
+      }));
+      series.appear(1000);
+      chart.appear(1000, 100);
+      loadData();
+      setInterval(loadData,30000);
+    });
+
+  script.
+
+    $(document).ready(function() {
+
+      var rootPie = am5.Root.new("piechartdiv");
+      rootPie.setThemes([
+        am5themes_Dark.new(rootPie)
+      ]);
+      var chartPie = rootPie.container.children.push(am5percent.PieChart.new(rootPie, {
+        layout: rootPie.verticalLayout
+      }));
+      var seriesPie = chartPie.series.push(am5percent.PieSeries.new(rootPie, {
+        valueField: "count",
+        categoryField: "_id"
+      }));
+
+      function loadDataPie(blocks) {
+        am5.net.load("/ext/getblocks/" + blocks).then(function(result) {
+          var data = am5.JSONParser.parse(result.response);
+          seriesPie.data.setAll(data);
+        });
+      }
+
+      loadDataPie(500);
+
+      var legendPie = chartPie.children.push(am5.Legend.new(rootPie, {
+        centerX: am5.percent(50),
+        x: am5.percent(50),
+        marginTop: 15,
+        marginBottom: 15,
+      }));
+      legendPie.data.setAll(seriesPie.dataItems);
+      seriesPie.appear(1000, 100);
+
+      $(function() {
+        $('select[id="PieBlocks"]').on('change', function() {
+            var blocks = $(this).find(":selected").val();
+            loadDataPie(blocks);
+        });
+      });
+    });
+
+  block content
+  .col-md-12
+    .row.text-center.d-flex.justify-content-center
+      .col-md-10
+        .card.card-defaulttimestamp.d-md-block.d-block.border.border-primary.border-3(style="background-color: rgba(255, 255, 255, 0.1) !important;")
+          .card-header.bg-primary.text-white.border.border-white.border-1(style="opacity: 1 !important;")
+            label MinotaurX Network Difficulty
+          .card-body(style="opacity: .8")
+            #chartdivDifficultyMinX
+  br
+  .col-md-12
+    .row.text-center.d-flex.justify-content-center
+      .col-md-10
+        .card.card-defaulttimestamp.d-md-block.d-block.border.border-primary.border-3(style="background-color: rgba(255, 255, 255, 0.1) !important;")
+          .card-header.bg-primary.text-white.border.border-white.border-1(style="opacity: 1 !important;")
+            label X16RT Network Difficulty
+          .card-body(style="opacity: .8")
+            #chartdivDifficultyX16RT
+  br
+  .col-md-12
+    .row.text-center.d-flex.justify-content-center
+      .col-md-10
+        .card.card-default.d-md-block.d-block.border.border-primary.border-3(style="background-color: rgba(255, 255, 255, 0.1) !important;")
+          .card-header.bg-primary.text-white.border.border-white.border-1(style="opacity: 1")
+            label MinotaurX Network Hashrate
+          .card-body(style="opacity: .8")
+            #chartdivNethashMinX
+  br
+  .col-md-12
+    .row.text-center.d-flex.justify-content-center
+      .col-md-10
+        .card.card-default.d-md-block.d-block.border.border-primary.border-3(style="background-color: rgba(255, 255, 255, 0.1) !important;")
+          .card-header.bg-primary.text-white.border.border-white.border-1(style="opacity: 1")
+            label X16RT Network Hashrate
+          .card-body(style="opacity: .8")
+            #chartdivNethashX16RT
+  br
+  .col-md-12
+    .row.text-center.d-flex.justify-content-center
+      .col-md-10
+        .card.card-default.d-md-block.d-block.border.border-primary.border-3(style="background-color: rgba(255, 255, 255, 0.1) !important;")
+          .card-header.bg-primary.text-white.border.border-white.border-1(style="opacity: 1")
+            label X16RT and MinotaurX Blocks
+            label(style='float:right;') Blocks:
+              select#PieBlocks
+                option(value=100000) 100,000
+                option(value=75000) 70,000
+                option(value=50000) 50,000
+                option(value=40000) 40,000
+                option(value=30000) 30,000
+                option(value=20000) 20,000
+                option(value=10000) 10,000
+                option(value=5000) 5,000
+                option(value=4000) 4,000
+                option(value=3000) 3,000
+                option(value=2000) 2,000
+                option(value=1000) 1,000
+                option(value=500 selected) 500
+                option(value=400) 400
+                option(value=300) 300
+                option(value=200) 200
+                option(value=100) 100
+                option(value=50) 50
+          .card-body(style="opacity: .8")
+            #piechartdiv
