@@ -34,9 +34,9 @@ body {
   padding: 130px 40px; 
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
   margin-bottom: 40px;
-  background-color: black;
-  background-image: url(/images/avnbackground.png);
+  background: url(/images/AVN_wallpaper12_3840x2160.jpg) #000 no-repeat fixed;
   background-size: contain;
+  background-position: bottom 45px center;
   clear: both;
 }
 

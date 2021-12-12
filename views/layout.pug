@@ -75,7 +75,7 @@ html
             $("#difficulty").text(diffString);
             $("#difficultyMinx").text(diffMinxString);
             $("#hashrate").text(hashrateString);
-            $("#hashrateMinx").text(hashrateMinxString);
+            $("#hashrateMinx").text(hashrateMinxString + ' (KH/s)');
             $("#lastPrice").text(parseFloat(json.data[0].lastPrice).toFixed(8) + ' #{settings.markets.exchange}'.toUpperCase());
             $("#marketCap").text((parseFloat(json.data[0].lastPrice).toFixed(8) * parseInt(parseFloat(json.data[0].supply).toFixed(0))).toLocaleString('en') + ' #{settings.markets.exchange}'.toUpperCase());
             $("#lblConnections").text(json.data[0].connections + ' connections');

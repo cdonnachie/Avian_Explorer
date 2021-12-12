@@ -52,7 +52,7 @@ block content
         dataType: 'json',
         success: function(json) {  
           for (var i=0;i<json.data.length; i++ ) {
-            if(json.data[i]['protocol'] == '70027') {
+            if(json.data[i]['protocol'] >= '70029') {
               var row = [];
               row.push((json.data[i]['address']));
               row.push((json.data[i]['port']));
